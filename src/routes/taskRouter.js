@@ -10,5 +10,10 @@ taskRouter.put(
   authenticateToken,
   taskController.atualizarTarefaConcluida
 );
+taskRouter.delete(
+  "/tarefa/:id",
+  authenticateToken,
+  taskController.deletarTarefa
+);
 
 export default taskRouter;

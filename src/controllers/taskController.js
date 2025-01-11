@@ -90,8 +90,41 @@ async function atualizarTarefaConcluida(req, res) {
   }
 }
 
+async function deletarTarefa(req, res) {
+  try {
+    const id = parseInt(req.params.id); // Obtém o ID da tarefa na URL
+    const userId = req.user.id; // Obtém o ID do usuário autenticado
+
+    const tarefa = await prisma.tarefas.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!tarefa) {
+      return res
+        .status(404)
+        .json({ message: "Tarefa não encontrada ou não pertence ao usuário" });
+    }
+
+    // Deleta a tarefa do banco de dados
+    await prisma.tarefas.delete({
+      where: {
+        id, // ID da tarefa a ser excluída
+      },
+    });
+
+    res.json({ message: "Tarefa excluída com sucesso" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erro interno do servidor" });
+  }
+}
+
 export default {
   criarTarefa,
   editarTarefa,
   atualizarTarefaConcluida,
+  deletarTarefa,
 };
