@@ -1,6 +1,6 @@
 import { Router } from "express";
 import taskController from "../controllers/taskController.js";
-import authenticateToken from "../middleware/authenticateToken .js";
+import authenticateToken from "../middleware/authenticateToken.js";
 const taskRouter = Router();
 
 taskRouter.post("/tarefa", authenticateToken, taskController.criarTarefa);
