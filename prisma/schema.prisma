@@ -14,8 +14,20 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  nome  String
-  senha String
+  id      Int       @id @default(autoincrement())
+  email   String    @unique
+  nome    String
+  senha   String
+  tarefas Tarefas[]
+}
+
+model Tarefas {
+  id               Int       @id @default(autoincrement())
+  titulo           String
+  concluida        Boolean   @default(false)
+  data_criacao     DateTime  @default(now())
+  data_atualizacao DateTime  @updatedAt
+  data_conclusao   DateTime?
+  userId           Int
+  user             User      @relation(fields: [userId], references: [id])
 }
