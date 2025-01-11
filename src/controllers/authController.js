@@ -70,7 +70,29 @@ async function realizaLogin(req, res) {
   }
 }
 
+async function me(req, res) {
+  try {
+    const id = req.user.id; // Obtém o ID do usuário a partir do token JWT
+
+    const user = await prisma.user.findUnique({
+      where: { id }, // Obtém o usuário pelo ID do token
+      include: {
+        tarefas: true, // Inclui as tarefas associadas ao usuário
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" }); // Usuário não encontrado
+    }
+
+    res.json(user); // Retorna os dados do usuário, incluindo as tarefas
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message }); // Retorna erro em caso de falha
+  }
+}
 export default {
   criarUser,
   realizaLogin,
+  me,
 };
