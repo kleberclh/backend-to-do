@@ -49,7 +49,7 @@ backend-to-do/
 
 1. Clone este repositório:
    ```sh
-   git clone https:/github.com/kleberclh/backend-to-do.git
+   git clone https://github.com/kleberclh/backend-to-do.git
    ```
 
 2. Acesse o diretório do projeto:
